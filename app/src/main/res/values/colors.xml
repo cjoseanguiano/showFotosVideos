@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="windowBackground">#FAFAFA</color>
+
+    <color name="colorPrimaryDark">#0d2541</color>
+    <color name="colorPrimary">#083d77</color>
+    <color name="colorAccent">#2f6690</color>
+
+    <color name="textColorPrimary">#07020d</color>
+    <color name="textColorSecondary">@color/colorPrimary</color>
+    <color name="textColorGrey">@color/gainsboro</color>
+    <color name="textColorGreyDisabled">@color/gray</color>
+    <color name="dividerColor">#ffcdd1d5</color>
+    <color name="textColorButtona">@color/textColorButton</color>
+
+    <color name="red">#f44336</color>
+    <color name="pink">#f06292</color>
+    <color name="purple">#ba68c8</color>
+    <color name="deep_purple">#9575cd</color>
+    <color name="indigo">#7986cb</color>
+    <color name="blue">#64b5f6</color>
+    <color name="green">#a5d6a7</color>
+    <color name="yellow">#fff59d</color>
+    <color name="orange">#ffb74d</color>
+    <color name="brown">#a1887f</color>
+    <color name="gray">#9e9e9e</color>
+    <color name="gray_disable">#ffc6c6c6</color>
+    <color name="gainsboro">#616161</color>
+    <color name="blue_gray">#d9dcd6</color>
+    <color name="textColorButton">#fafafa</color>
+    <color name="windowBackgroundShadow">#fff0f0f0</color>
+</resources>
