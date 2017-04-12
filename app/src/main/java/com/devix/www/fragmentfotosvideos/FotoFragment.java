@@ -76,6 +76,11 @@ public class FotoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_blank, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        mRecyclerView.setPadding(10,10,10,10);
+
+        /*GridLayout.LayoutParams params = (GridLayout.LayoutParams) child.getLayoutParams();
+    params.width = (parent.getWidth()/parent.getColumnCount()) -params.rightMargin - params.leftMargin;
+    child.setLayoutParams(params);*/
         return view;
     }
 
