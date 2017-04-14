@@ -1,4 +1,4 @@
-package com.devix.www.fragmentfotosvideos;
+package com.devix.www.fragmentfotosvideosonClick;
 
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -11,11 +11,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.devix.www.fragmentfotosvideos.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideoFragment extends Fragment {
+
+public class FotoFragment extends Fragment {
     private Cursor cursor;
     private int columnIndex;
     private static final String TAG = "RecyclerViewExample";
@@ -26,53 +30,43 @@ public class VideoFragment extends Fragment {
     String type = "";
 
 
-    public VideoFragment() {
+    public FotoFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        type = "video";
+        type = "images";
         new MediaAsyncTask().execute(type);
     }
 
-    private void parseAllVideo(String type) {
+    private void parseAllImages(String type) {
         try {
-            String name = null;
-            String[] thumbColumns = {MediaStore.Video.Thumbnails.DATA,
-                    MediaStore.Video.Thumbnails.VIDEO_ID};
+            String[] projection = {MediaStore.Images.Media.DATA};
+            cursor = getActivity().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    projection,
+                    null,
+                    null,
+                    null);
 
-            int video_column_index;
-            String[] proj = {MediaStore.Video.Media._ID, MediaStore.Video.Media.DATA, MediaStore.Video.Media.DISPLAY_NAME,
-                    MediaStore.Video.Media.SIZE};
-            Cursor videocursor = getActivity().getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                    proj, null, null, null);
-            int count = videocursor.getCount();
-            Log.d("No of video", "" + count);
-            for (int i = 0; i < count; i++) {
-                DataPictures mediaFileInfo = new DataPictures();
-                video_column_index = videocursor
-                        .getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME);
-                videocursor.moveToPosition(i);
-                name = videocursor.getString(video_column_index);
+            int size = cursor.getCount();
+            if (size == 0) {
 
-                mediaFileInfo.setFileName(name);
+            } else {
 
-                int column_index = videocursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                videocursor.moveToPosition(i);
-                String filepath = videocursor.getString(column_index);
+                while (cursor.moveToNext()) {
 
-                mediaFileInfo.setFilePath(filepath);
-                mediaFileInfo.setFileType(type);
-                mediaList.add(mediaFileInfo);
-                // id += " Size(KB):" +
-                // videocursor.getString(video_column_index);
-
-
+                    int file_ColumnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    String path = cursor.getString(file_ColumnIndex);
+                    String fileName = path.substring(path.lastIndexOf("/") + 1, path.length());
+                    DataPictures mediaFileInfo = new DataPictures();
+                    mediaFileInfo.setFilePath(path);
+//                    mediaFileInfo.setFileName(fileName);Visualizar nombre archivo
+                    mediaFileInfo.setFileType(type);
+                    mediaList.add(mediaFileInfo);
+                }
             }
-            videocursor.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,9 +76,19 @@ public class VideoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_video, container, false);
+        View view = inflater.inflate(R.layout.fragment_blank, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        mRecyclerView.setPadding(10,10,10,10);
+
+        mRecyclerView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(v.getContext(), "Intento onLongClick= ", Toast.LENGTH_SHORT).show();
+
+                return false;
+            }
+        });
         return view;
     }
 
@@ -96,8 +100,8 @@ public class VideoFragment extends Fragment {
             String type = params[0];
             try {
                 mediaList = new ArrayList<>();
-                if (type.equalsIgnoreCase("video")) {
-                    parseAllVideo(type);
+                if (type.equalsIgnoreCase("images")) {
+                    parseAllImages(type);
                     result = 1;
                 }
             } catch (Exception e) {
