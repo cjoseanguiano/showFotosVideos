@@ -16,7 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.devix.www.fragmentfotosvideos.R;
 import com.squareup.picasso.Picasso;
@@ -28,24 +27,36 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaListRowHolder> {
 
     private List<DataPictures> itemList;
     private Context mContext;
+    //    public List<Integer> selectedPositions;
+    CustomItemClickListener listener;
 
 
-    public MediaRVAdapter(Context context, List<DataPictures> itemList) {
+    public MediaRVAdapter(Context context, List<DataPictures> itemList, CustomItemClickListener listener) {
         this.itemList = itemList;
         this.mContext = context;
+        this.listener = listener;
     }
 
     @Override
     public MediaListRowHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_row, null);
-        MediaListRowHolder mh = new MediaListRowHolder(v);
+        final MediaListRowHolder mh = new MediaListRowHolder(v);
+
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(MediaRVAdapter.this, v, mh.getPosition());
+
+            }
+        });
         return mh;
     }
 
     @Override
-    public void onBindViewHolder(MediaListRowHolder mediaListRowHolder, final int i) {
+    public void onBindViewHolder(final MediaListRowHolder mediaListRowHolder, final int i) {
+        final DataPictures item = itemList.get(i);
+
         try {
-            DataPictures item = itemList.get(i);
 
             Uri uri = Uri.fromFile(new File(item.getFilePath()));
             if (item.getFileType().equalsIgnoreCase("video")) {
@@ -82,17 +93,20 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaListRowHolder> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mediaListRowHolder.view.setOnClickListener(new View.OnClickListener() {
+ /*       mediaListRowHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, "Tomar valor " + i, Toast.LENGTH_SHORT).show();
-
+//                item.setSelected(!(item.isSelected()));
+//                mediaListRowHolder.view.setBackgroundColor(item.isSelected() ? Color.BLUE : Color.TRANSPARENT);
+                    listener.onItemClick(v, i);
             }
-        });
+        });*/
     }
 
     @Override
     public int getItemCount() {
         return (null != itemList ? itemList.size() : 0);
     }
+
 }

@@ -112,7 +112,11 @@ public class VideoFragment extends Fragment {
         @Override
         protected void onPostExecute(Integer result) {
             if (result == 1) {
-                adapter = new MediaRVAdapter(getActivity(), mediaList);
+                adapter = new MediaRVAdapter(getActivity(), mediaList, new CustomItemClickListener() {
+                    @Override
+                    public void onItemClick(MediaRVAdapter adapter, View v, int position) {
+                    }
+                });
                 mRecyclerView.setAdapter(adapter);
             } else {
                 Log.e(TAG, "Failed to show list");

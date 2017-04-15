@@ -8,6 +8,7 @@ public class DataPictures {
     String filePath;
     String fileType;
     String fileName;
+    private boolean isSelected =false;
 
     public String getFilePath() {
         return filePath;
@@ -31,5 +32,14 @@ public class DataPictures {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+
+    public boolean isSelected() {
+        return isSelected;
     }
 }

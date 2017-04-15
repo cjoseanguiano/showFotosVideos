@@ -79,16 +79,7 @@ public class FotoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_blank, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        mRecyclerView.setPadding(10,10,10,10);
-
-        mRecyclerView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(v.getContext(), "Intento onLongClick= ", Toast.LENGTH_SHORT).show();
-
-                return false;
-            }
-        });
+        mRecyclerView.setPadding(10, 10, 10, 10);
         return view;
     }
 
@@ -114,7 +105,17 @@ public class FotoFragment extends Fragment {
         @Override
         protected void onPostExecute(Integer result) {
             if (result == 1) {
-                adapter = new MediaRVAdapter(getActivity(), mediaList);
+                adapter = new MediaRVAdapter(getActivity(), mediaList, new CustomItemClickListener() {
+                    @Override
+                    public void onItemClick(MediaRVAdapter mediaRVAdapter, View v, int position) {
+                        final DataPictures item = mediaList.get(position);
+
+                        Toast.makeText(getActivity(), "Clicked position " + position, Toast.LENGTH_SHORT).show();
+                        int selectedIndex = mediaList.indexOf(position);
+                        Log.d(TAG, "selectedIndex:" + selectedIndex);
+
+                    }
+                });
                 mRecyclerView.setAdapter(adapter);
             } else {
                 Log.e(TAG, "Failed to show list");
