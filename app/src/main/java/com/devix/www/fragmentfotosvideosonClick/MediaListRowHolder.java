@@ -13,7 +13,8 @@ import android.widget.TextView;
 
 import com.devix.www.fragmentfotosvideos.R;
 
-public class MediaListRowHolder extends RecyclerView.ViewHolder  {
+/*
+public class MediaListRowHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     public View view;
     protected ImageView thumbnail;
     protected TextView title;
@@ -22,8 +23,7 @@ public class MediaListRowHolder extends RecyclerView.ViewHolder  {
         super(view);
         this.thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
         this.title = (TextView) view.findViewById(R.id.title);
-//        this.view = view;
-
+        view.setOnClickListener(this);
     }
 
     public void dysplay(String text, boolean isSelected) {
@@ -35,4 +35,9 @@ public class MediaListRowHolder extends RecyclerView.ViewHolder  {
         title.setBackgroundResource(isSelected ? R.drawable.logo_slogan : R.drawable.logo_slogan);
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }
+*/

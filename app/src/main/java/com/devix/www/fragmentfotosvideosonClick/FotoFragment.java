@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.devix.www.fragmentfotosvideos.R;
 
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FotoFragment extends Fragment {
+public class FotoFragment extends Fragment implements RecyclerViewClickListener {
     private Cursor cursor;
     private int columnIndex;
     private static final String TAG = "RecyclerViewExample";
@@ -80,7 +79,15 @@ public class FotoFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         mRecyclerView.setPadding(10, 10, 10, 10);
+        mRecyclerView.setSelected(true);
         return view;
+    }
+
+    @Override
+    public void recyclerViewListClicked(View v, int position) {
+        mediaList.get(position);
+//        int selectIndex = adapter.itemList.indexOf(position);
+
     }
 
     public class MediaAsyncTask extends AsyncTask<String, Void, Integer> {
@@ -105,17 +112,8 @@ public class FotoFragment extends Fragment {
         @Override
         protected void onPostExecute(Integer result) {
             if (result == 1) {
-                adapter = new MediaRVAdapter(getActivity(), mediaList, new CustomItemClickListener() {
-                    @Override
-                    public void onItemClick(MediaRVAdapter mediaRVAdapter, View v, int position) {
-                        final DataPictures item = mediaList.get(position);
-
-                        Toast.makeText(getActivity(), "Clicked position " + position, Toast.LENGTH_SHORT).show();
-                        int selectedIndex = mediaList.indexOf(position);
-                        Log.d(TAG, "selectedIndex:" + selectedIndex);
-
-                    }
-                });
+//                adapter = new MediaRVAdapter(getActivity(), mediaList);
+                adapter = new MediaRVAdapter(getActivity(), mediaList, FotoFragment.this);
                 mRecyclerView.setAdapter(adapter);
             } else {
                 Log.e(TAG, "Failed to show list");

@@ -4,6 +4,9 @@ package com.devix.www.fragmentfotosvideosonClick;
  *For more info contact : c.joseanguiano@gmail.com
  */
 
+import android.widget.Adapter;
+import android.widget.AdapterView;
+
 public class DataPictures {
     String filePath;
     String fileType;
