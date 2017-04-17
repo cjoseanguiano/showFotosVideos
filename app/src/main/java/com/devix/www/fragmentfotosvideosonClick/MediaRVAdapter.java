@@ -14,7 +14,9 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,7 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaRVAdapter.MediaLis
     private Context mContext;
     private DataPictures model;
     private static RecyclerViewClickListener mListener;
+    private SparseBooleanArray selectedItems;
 
     public MediaRVAdapter(Context context, List<DataPictures> itemList, RecyclerViewClickListener mListener) {
         this.itemList = itemList;
@@ -52,14 +55,17 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaRVAdapter.MediaLis
     }
 
     @Override
-    public void onBindViewHolder(final MediaListRowHolder mediaListRowHolder, final int i) {
+    public void onBindViewHolder(MediaListRowHolder mediaListRowHolder, final int i) {
 
-        model = itemList.get(i);
-        mediaListRowHolder.thumbnail.setBackgroundColor(i);
+//        mediaListRowHolder.thumbnail.setSelected(selectedItems.get(i, false));
+
+//        model = itemList.get(i);
         try {
-            final DataPictures item = itemList.get(i);
-
+            model = itemList.get(i);
+            final DataPictures item = model;
+            mediaListRowHolder.title.setText(Html.fromHtml(item.getFileName()));
             Uri uri = Uri.fromFile(new File(item.getFilePath()));
+
             if (item.getFileType().equalsIgnoreCase("video")) {
                 Bitmap bmThumbnail = ThumbnailUtils.
                         extractThumbnail(ThumbnailUtils.createVideoThumbnail(item.getFilePath(),
@@ -111,24 +117,23 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaRVAdapter.MediaLis
         public MediaListRowHolder(View view) {
             super(view);
             this.thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
-            this.title = (TextView) view.findViewById(R.id.title);
-//        this.view = view;
+            this.title = (TextView) view.findViewById(R.id.title1);
+            view.setClickable(true);
             view.setOnClickListener(this);
 
         }
 
         public void dysplay(String text, boolean isSelected) {
-            title.setText(text);
             dysplay(isSelected);
         }
 
         public void dysplay(boolean isSelected) {
-            title.setBackgroundResource(isSelected ? R.drawable.logo_slogan : R.drawable.logo_slogan);
+            title.setBackgroundResource(isSelected ? R.color.blue : R.color.brown);
         }
 
         @Override
         public void onClick(View v) {
-            /*if (mClickListner != null) {
+            if (mClickListner != null) {
                 model.setSelected(!model.isSelected());
                 System.out.println("Valor ");
                 Log.e("A", "Intento " + getAdapterPosition());
@@ -138,7 +143,8 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaRVAdapter.MediaLis
 
                 Log.e(MediaRVAdapter.this.toString(), "A" + getAdapterPosition());
                 mClickListner.onItemClick((AdapterView<?>) itemList, v, getAdapterPosition(), MediaRVAdapter.this.getItemId(getPosition()));
-            }*/
+            }
+
             mListener.recyclerViewListClicked(v, getLayoutPosition());
             Log.e("A", "Intento " + getAdapterPosition());
 

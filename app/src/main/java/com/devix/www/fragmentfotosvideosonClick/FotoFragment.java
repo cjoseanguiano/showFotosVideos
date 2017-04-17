@@ -57,11 +57,14 @@ public class FotoFragment extends Fragment implements RecyclerViewClickListener 
                 while (cursor.moveToNext()) {
 
                     int file_ColumnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
                     String path = cursor.getString(file_ColumnIndex);
+
                     String fileName = path.substring(path.lastIndexOf("/") + 1, path.length());
+
                     DataPictures mediaFileInfo = new DataPictures();
                     mediaFileInfo.setFilePath(path);
-//                    mediaFileInfo.setFileName(fileName);Visualizar nombre archivo
+                    mediaFileInfo.setFileName(fileName);
                     mediaFileInfo.setFileType(type);
                     mediaList.add(mediaFileInfo);
                 }
@@ -78,7 +81,6 @@ public class FotoFragment extends Fragment implements RecyclerViewClickListener 
         View view = inflater.inflate(R.layout.fragment_blank, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        mRecyclerView.setPadding(10, 10, 10, 10);
         mRecyclerView.setSelected(true);
         return view;
     }

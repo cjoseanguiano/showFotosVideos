@@ -37,12 +37,11 @@ public class DataPictures {
         this.fileName = fileName;
     }
 
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
-
-
     public boolean isSelected() {
         return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }
