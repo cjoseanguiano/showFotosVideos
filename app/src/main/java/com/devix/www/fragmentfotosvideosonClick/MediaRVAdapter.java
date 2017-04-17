@@ -28,6 +28,7 @@ import com.devix.www.fragmentfotosvideos.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MediaRVAdapter extends RecyclerView.Adapter<MediaRVAdapter.MediaListRowHolder> {
@@ -38,6 +39,10 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaRVAdapter.MediaLis
     private DataPictures model;
     private static RecyclerViewClickListener mListener;
     private SparseBooleanArray selectedItems;
+    //    private List<DataPictures> mediaList = new ArrayList<>();
+    private List<Integer> mediaList = new ArrayList<>();
+    private ArrayList<String> selectedStrings;
+//    private ArrayList<String> selectedStrings;
 
     public MediaRVAdapter(Context context, List<DataPictures> itemList, RecyclerViewClickListener mListener) {
         this.itemList = itemList;
@@ -65,7 +70,9 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaRVAdapter.MediaLis
             final DataPictures item = model;
             mediaListRowHolder.title.setText(Html.fromHtml(item.getFileName()));
             Uri uri = Uri.fromFile(new File(item.getFilePath()));
-
+/*MediaFileInfo item = itemList.get(i);
+            mediaListRowHolder.title.setText(Html.fromHtml(item.getFileName()));
+            Uri uri = Uri.fromFile(new File(item.getFilePath()));*/
             if (item.getFileType().equalsIgnoreCase("video")) {
                 Bitmap bmThumbnail = ThumbnailUtils.
                         extractThumbnail(ThumbnailUtils.createVideoThumbnail(item.getFilePath(),
@@ -135,8 +142,6 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaRVAdapter.MediaLis
         public void onClick(View v) {
             if (mClickListner != null) {
                 model.setSelected(!model.isSelected());
-                System.out.println("Valor ");
-                Log.e("A", "Intento " + getAdapterPosition());
 
                 if (model.isSelected()) thumbnail.setBackgroundColor(Color.GREEN);
                 else thumbnail.setBackgroundColor(Color.RED);
@@ -145,9 +150,27 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaRVAdapter.MediaLis
                 mClickListner.onItemClick((AdapterView<?>) itemList, v, getAdapterPosition(), MediaRVAdapter.this.getItemId(getPosition()));
             }
 
-            mListener.recyclerViewListClicked(v, getLayoutPosition());
+//            mListener.recyclerViewListClicked(,v, getLayoutPosition());
+//            mListener.recyclerViewListClicked(MediaRVAdapter.this, v, getLayoutPosition());
             Log.e("A", "Intento " + getAdapterPosition());
+            int selectIndex = mediaList.indexOf(getAdapterPosition());
+            int valuePosition = getAdapterPosition();
 
+            Log.e("", "XD" + selectIndex);
+
+            if (selectIndex > -1) {
+                mediaList.remove(valuePosition);
+                dysplay(false);
+//                itemList.add((String)View.getParent().get
+            } else {
+                mediaList.add(getAdapterPosition());
+                dysplay(true);
+
+//                selectedStrings.add((String) itemList.get();
+
+                        Log.e("A", "A" + selectedStrings);
+
+            }
         }
     }
 

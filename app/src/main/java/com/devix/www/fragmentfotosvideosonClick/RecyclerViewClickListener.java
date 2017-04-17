@@ -5,7 +5,8 @@ package com.devix.www.fragmentfotosvideosonClick;
  */
 
 import android.view.View;
+import android.widget.AdapterView;
 
 public interface RecyclerViewClickListener {
-    void recyclerViewListClicked(View v, int position);
+    void recyclerViewListClicked(AdapterView<?> parent,View v, int position);
 }
