@@ -17,7 +17,7 @@ import com.devix.www.fragmentfotosvideos.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideoFragment extends Fragment implements RecyclerViewClickListener{
+public class VideoFragment extends Fragment implements RecyclerViewClickListener {
     private Cursor cursor;
     private int columnIndex;
     private static final String TAG = "RecyclerViewExample";
@@ -90,10 +90,9 @@ public class VideoFragment extends Fragment implements RecyclerViewClickListener
         return view;
     }
 
-
     @Override
     public void recyclerViewListClicked(View v, int position) {
-
+//        mediaList.get(position);
     }
 
     public class MediaAsyncTask extends AsyncTask<String, Void, Integer> {
@@ -118,7 +117,7 @@ public class VideoFragment extends Fragment implements RecyclerViewClickListener
         @Override
         protected void onPostExecute(Integer result) {
             if (result == 1) {
-                adapter = new MediaRVAdapter(getActivity(), mediaList,VideoFragment.this);
+                adapter = new MediaRVAdapter(getActivity(), mediaList, VideoFragment.this);
                 mRecyclerView.setAdapter(adapter);
             } else {
                 Log.e(TAG, "Failed to show list");

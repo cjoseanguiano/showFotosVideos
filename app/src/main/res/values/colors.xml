@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="windowBackground">#FAFAFA</color>
+    <color name="windowBackground">#e7caca</color>
 
     <color name="colorPrimaryDark">#0d2541</color>
     <color name="colorPrimary">#083d77</color>
@@ -29,4 +29,5 @@
     <color name="blue_gray">#d9dcd6</color>
     <color name="textColorButton">#fafafa</color>
     <color name="windowBackgroundShadow">#fff0f0f0</color>
+    <color name="tranparent">#00ffffff</color>
 </resources>

@@ -5,8 +5,10 @@ package com.devix.www.fragmentfotosvideosonClick;
  */
 
 import android.view.View;
-import android.widget.AdapterView;
 
 public interface RecyclerViewClickListener {
-    void recyclerViewListClicked(AdapterView<?> parent,View v, int position);
+    //    void recyclerViewListClicked(MediaRVAdapter parent, View v, int position);
+    void recyclerViewListClicked(View v, int position);
+
+
 }

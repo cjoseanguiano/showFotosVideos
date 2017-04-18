@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import com.devix.www.fragmentfotosvideos.R;
 
@@ -28,6 +27,7 @@ public class FotoFragment extends Fragment implements RecyclerViewClickListener 
     private RecyclerView mRecyclerView;
     private MediaRVAdapter adapter;
     String type = "";
+    private ArrayList<String> selectedStrings;
 
 
     public FotoFragment() {
@@ -84,20 +84,11 @@ public class FotoFragment extends Fragment implements RecyclerViewClickListener 
     }
 
     @Override
-    public void recyclerViewListClicked(AdapterView<?> parent, View v, int position) {
-        mediaList.get(position);
+    public void recyclerViewListClicked(View v, int position) {
+//        mediaList.get(position);
 
     }
 
-//    @Override
-//    public void recyclerViewListClicked(View v, int position) {
-////        mediaList.get(position);
-////        int selectIndex = adapter.itemList.indexOf(position);
-////
-////        int selectIndex = mediaList.indexOf(position);
-////        System.out.println(selectIndex);
-////        Log.e("", "XD" + selectIndex);
-//    }
 
     public class MediaAsyncTask extends AsyncTask<String, Void, Integer> {
 

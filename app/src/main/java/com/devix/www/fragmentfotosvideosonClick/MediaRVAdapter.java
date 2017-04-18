@@ -8,15 +8,12 @@ package com.devix.www.fragmentfotosvideosonClick;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,11 +35,11 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaRVAdapter.MediaLis
     private Context mContext;
     private DataPictures model;
     private static RecyclerViewClickListener mListener;
-    private SparseBooleanArray selectedItems;
     //    private List<DataPictures> mediaList = new ArrayList<>();
     private List<Integer> mediaList = new ArrayList<>();
-    private ArrayList<String> selectedStrings;
-//    private ArrayList<String> selectedStrings;
+    private ArrayList<Integer> selectedStrings;
+    //    private ArrayList<String> selectedStrings;
+    ArrayList<String> unoOne = new ArrayList<>();
 
     public MediaRVAdapter(Context context, List<DataPictures> itemList, RecyclerViewClickListener mListener) {
         this.itemList = itemList;
@@ -68,11 +65,9 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaRVAdapter.MediaLis
         try {
             model = itemList.get(i);
             final DataPictures item = model;
-            mediaListRowHolder.title.setText(Html.fromHtml(item.getFileName()));
+//            mediaListRowHolder.title.setText(Html.fromHtml(item.getFileName()));
             Uri uri = Uri.fromFile(new File(item.getFilePath()));
-/*MediaFileInfo item = itemList.get(i);
-            mediaListRowHolder.title.setText(Html.fromHtml(item.getFileName()));
-            Uri uri = Uri.fromFile(new File(item.getFilePath()));*/
+
             if (item.getFileType().equalsIgnoreCase("video")) {
                 Bitmap bmThumbnail = ThumbnailUtils.
                         extractThumbnail(ThumbnailUtils.createVideoThumbnail(item.getFilePath(),
@@ -124,53 +119,41 @@ public class MediaRVAdapter extends RecyclerView.Adapter<MediaRVAdapter.MediaLis
         public MediaListRowHolder(View view) {
             super(view);
             this.thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
-            this.title = (TextView) view.findViewById(R.id.title1);
+//            this.title = (TextView) view.findViewById(R.id.title1);
             view.setClickable(true);
             view.setOnClickListener(this);
 
         }
 
-        public void dysplay(String text, boolean isSelected) {
+        public void dysplay(ImageView imageView, boolean isSelected) {
             dysplay(isSelected);
         }
 
         public void dysplay(boolean isSelected) {
-            title.setBackgroundResource(isSelected ? R.color.blue : R.color.brown);
+//            title.setBackgroundResource(isSelected ? R.color.blue : R.color.brown);
+//            title.setBackgroundResource(isSelected ? R.drawable.logo_slogan : R.drawable.logo_slogan);
+//            thumbnail.setBackgroundResource(isSelected ? R.color.blue : R.color.red);
+            thumbnail.setImageResource(isSelected ? R.drawable.logo_slogan : R.color.blue);
         }
 
         @Override
         public void onClick(View v) {
-            if (mClickListner != null) {
-                model.setSelected(!model.isSelected());
-
-                if (model.isSelected()) thumbnail.setBackgroundColor(Color.GREEN);
-                else thumbnail.setBackgroundColor(Color.RED);
-
-                Log.e(MediaRVAdapter.this.toString(), "A" + getAdapterPosition());
-                mClickListner.onItemClick((AdapterView<?>) itemList, v, getAdapterPosition(), MediaRVAdapter.this.getItemId(getPosition()));
-            }
-
-//            mListener.recyclerViewListClicked(,v, getLayoutPosition());
-//            mListener.recyclerViewListClicked(MediaRVAdapter.this, v, getLayoutPosition());
+            //            mListener.recyclerViewListClicked(v, getLayoutPosition());
+            mListener.recyclerViewListClicked(v, getAdapterPosition());
             Log.e("A", "Intento " + getAdapterPosition());
-            int selectIndex = mediaList.indexOf(getAdapterPosition());
             int valuePosition = getAdapterPosition();
+            int selectIndex = mediaList.indexOf(valuePosition);
 
-            Log.e("", "XD" + selectIndex);
-
-            if (selectIndex > -1) {
-                mediaList.remove(valuePosition);
-                dysplay(false);
-//                itemList.add((String)View.getParent().get
-            } else {
-                mediaList.add(getAdapterPosition());
-                dysplay(true);
-
-//                selectedStrings.add((String) itemList.get();
-
-                        Log.e("A", "A" + selectedStrings);
-
-            }
+//            if (selectIndex > -1) {
+//                mediaList.remove(valuePosition);
+//                dysplay(false);
+//
+//
+//            } else {
+//                mediaList.add(valuePosition);
+//                dysplay(true);
+//
+//            }
         }
     }
 
